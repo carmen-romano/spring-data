@@ -1,14 +1,25 @@
 package carmenromano.spring_data.entities;
 
-import lombok.Getter;
 
 import java.util.List;
-
+import jakarta.persistence.*;
+import lombok.*;
+@Entity
+@DiscriminatorValue("pizza")
 @Getter
+@NoArgsConstructor
 public class Pizza extends Item {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String name;
 
+	@ManyToMany
+	@JoinTable(name = "pizza_topping",
+			joinColumns = @JoinColumn(name = "pizza_id"),
+			inverseJoinColumns = @JoinColumn(name = "topping_id"))
 	private List<Topping> toppingList;
+
 	private boolean isXl = false;
 
 	public Pizza(String name, List<Topping> toppingList, boolean isXl) {

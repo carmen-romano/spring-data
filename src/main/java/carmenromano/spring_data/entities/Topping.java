@@ -1,17 +1,28 @@
 package carmenromano.spring_data.entities;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
+@DiscriminatorValue("topping")
 @Getter
 @Setter
-
-public class Topping extends Item {
+public class Topping {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String name;
+	private int calories;
+	private double price;
+
+	public Topping() {
+	}
 
 	public Topping(String name, int calories, double price) {
-		super(calories, price);
 		this.name = name;
+		this.calories = calories;
+		this.price = price;
 	}
 
 	@Override
